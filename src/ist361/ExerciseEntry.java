@@ -13,15 +13,22 @@ import java.io.Serializable;
  */
 public class ExerciseEntry implements Serializable{
     
+    String title;
     double hourTime;
     String date;
     String description;
     
-    public ExerciseEntry(double hours, String date, String desc){
+    public ExerciseEntry(String title, double hours, String date, String desc){
         
+        this.title = title;
         hourTime = hours;
         this.date = date;
         description = desc;
+    }
+    
+    void setTitle(String name){
+        
+        title = name;
     }
     
     void setTime(int hours){
@@ -37,6 +44,10 @@ public class ExerciseEntry implements Serializable{
     void setDescription(String desc){
         
         description = desc;
+    }
+    
+    String getTitle(){
+        return title;
     }
     
     double getTime(){

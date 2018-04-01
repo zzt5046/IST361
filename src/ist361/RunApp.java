@@ -14,7 +14,7 @@ import java.io.File;
  *
  * @author Zach
  */
-public class runApp {
+public class RunApp {
 
     /**
      * @param args the command line arguments

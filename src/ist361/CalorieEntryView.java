@@ -50,6 +50,8 @@ public class CalorieEntryView extends javax.swing.JFrame {
         descBox = new javax.swing.JTextArea();
         submitButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        titleBox = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -87,6 +89,8 @@ public class CalorieEntryView extends javax.swing.JFrame {
 
         cancelButton.setText("Cancel");
 
+        jLabel5.setText("Title");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,6 +100,10 @@ public class CalorieEntryView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(titleBox, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel2)
@@ -123,7 +131,11 @@ public class CalorieEntryView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addComponent(jLabel1)
-                .addGap(44, 44, 44)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(titleBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(calorieBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -142,7 +154,7 @@ public class CalorieEntryView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(submitButton)
                     .addComponent(cancelButton))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -160,20 +172,22 @@ public class CalorieEntryView extends javax.swing.JFrame {
         submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 
+                String title = "";
                 int cals = 0;
                 String date = "";
                 String desc = "";
                 
-                if(!calorieBox.getText().isEmpty() || !monthBox.getText().isEmpty() || 
+                if(!titleBox.getText().isEmpty() || !calorieBox.getText().isEmpty() || !monthBox.getText().isEmpty() || 
                    !dayBox.getText().isEmpty() || !yearBox.getText().isEmpty() || !descBox.getText().isEmpty()){
                     
+                    title = titleBox.getText();
                     cals = Integer.parseInt(calorieBox.getText());
                     date = dayBox.getText() + "-" + yearBox.getText() + "-" + monthBox.getText();
                     desc = descBox.getText();
                     
                     CalorieEntryBackend backend = new CalorieEntryBackend(currentUser);
                     try {
-                        backend.addCalorieEntry(cals, date, desc);
+                        backend.addCalorieEntry(title, cals, date, desc);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     } catch (ClassNotFoundException ex) {
@@ -205,9 +219,11 @@ public class CalorieEntryView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField monthBox;
     private javax.swing.JButton submitButton;
+    private javax.swing.JTextField titleBox;
     private javax.swing.JTextField yearBox;
     // End of variables declaration//GEN-END:variables
 }

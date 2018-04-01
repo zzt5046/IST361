@@ -21,9 +21,9 @@ public class ExerciseEntryBackend {
         System.out.println("--ExerciseEntryBackend Instantiated");
     }
     
-    void addExerciseEntry(double hours, String date, String desc) throws IOException, FileNotFoundException, ClassNotFoundException{
+    void addExerciseEntry(String title, double hours, String date, String desc) throws IOException, FileNotFoundException, ClassNotFoundException{
         
-        ExerciseEntry entry = new ExerciseEntry(hours, date, desc);
+        ExerciseEntry entry = new ExerciseEntry(title, hours, date, desc);
         
         ExerciseEntryCtrl ctrl = new ExerciseEntryCtrl(currentUser);
         ctrl.addEntry(entry);

@@ -21,9 +21,9 @@ class CalorieEntryBackend {
         System.out.println("--CalorieEntryBackend Instantiated");
     }
     
-    void addCalorieEntry(int cals, String date, String desc) throws IOException, FileNotFoundException, ClassNotFoundException{
+    void addCalorieEntry(String title, int cals, String date, String desc) throws IOException, FileNotFoundException, ClassNotFoundException{
         
-        CalorieEntry entry = new CalorieEntry(cals, date, desc);
+        CalorieEntry entry = new CalorieEntry(title, cals, date, desc);
         
         CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
         ctrl.addEntry(entry);

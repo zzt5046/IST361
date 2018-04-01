@@ -8,15 +8,21 @@ import java.io.Serializable;
  */
 public class CalorieEntry implements Serializable{
 
+    String title;
     int calorieAmount;
     String description;
     String date;
 
-    public CalorieEntry(int amount, String dateString, String desc){
+    public CalorieEntry(String title, int amount, String dateString, String desc){
 
+        this.title = title;
         calorieAmount = amount;
         description = desc;
         this.date = dateString;
+    }
+    
+    void setTitle(String name){
+        title =name;
     }
     
     void setCalories(int cals){
@@ -28,6 +34,10 @@ public class CalorieEntry implements Serializable{
     }
     void setDate(String dateString){
         this.date = dateString;
+    }
+    
+    String getTitle(){
+        return title;
     }
     
     int getCalories(){

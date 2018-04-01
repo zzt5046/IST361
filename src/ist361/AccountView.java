@@ -35,7 +35,7 @@ public class AccountView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jLabel1.setText("User Profile");
+        jLabel1.setText("Profile Information");
 
         jLabel2.setText("jLabel2");
 
@@ -46,19 +46,19 @@ public class AccountView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(131, 131, 131)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(144, 144, 144)
-                        .addComponent(jLabel2)))
-                .addContainerGap(135, Short.MAX_VALUE))
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(88, 88, 88)
+                        .addComponent(jLabel1)))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(36, 36, 36)
                 .addComponent(jLabel1)
-                .addGap(42, 42, 42)
+                .addGap(41, 41, 41)
                 .addComponent(jLabel2)
                 .addContainerGap(175, Short.MAX_VALUE))
         );
