@@ -5,6 +5,12 @@
  */
 package ist361;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Zach
@@ -17,7 +23,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     
     User currentUser;
     
-    public MainMenuFrame(User user) {
+    public MainMenuFrame(User user) throws IOException, FileNotFoundException, ClassNotFoundException {
         
         currentUser = user;
         
@@ -25,6 +31,21 @@ public class MainMenuFrame extends javax.swing.JFrame {
         addListeners();
         
         jLabel1.setText(currentUser.getUsername() + "'s Main Menu");
+        
+        //check to see if there are entries... if not gray out button
+        CalorieEntryCtrl ctrl1 = new CalorieEntryCtrl(currentUser);
+        try{
+        ArrayList<CalorieEntry> calEntries = ctrl1.getList(currentUser).getList();
+        }catch(NullPointerException ex){
+            calorieEntries.setEnabled(false);
+        }
+        
+        ExerciseEntryCtrl ctrl2 = new ExerciseEntryCtrl(currentUser);
+        try{
+        ArrayList<ExerciseEntry> exEntries = ctrl2.getList(currentUser).getList();
+        }catch(NullPointerException ex){
+            exerciseEntries.setEnabled(false);
+        }
        
         setVisible(true);
     }
@@ -116,7 +137,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 
-                UserAccountView accView = new UserAccountView(currentUser);
+                try {
+                    UserAccountView accView = new UserAccountView(currentUser);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         
@@ -146,7 +173,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
         exerciseEntries.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 
-                ExerciseListView listView = new ExerciseListView(currentUser);
+                try {
+                    ExerciseListView listView = new ExerciseListView(currentUser);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         
