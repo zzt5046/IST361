@@ -22,6 +22,7 @@ public class CalorieListView extends javax.swing.JFrame {
      */
     User currentUser;
     JTable table;
+    int calorieCount;
     
     public CalorieListView(User currentUser) throws IOException, FileNotFoundException, ClassNotFoundException {
         
@@ -35,11 +36,39 @@ public class CalorieListView extends javax.swing.JFrame {
         CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
         ArrayList<CalorieEntry> entries = ctrl.getList(currentUser).getList();
         
+        calorieCount = 0;
         for(int i = 0; i < entries.size(); i++){
             
             Object[] data = {entries.get(i).getTitle(), entries.get(i).getCalories()};
             tablemodel.addRow(data);
+            calorieCount = calorieCount + entries.get(i).getCalories();
         }
+        
+        GoalCtrl ctrl2 = new GoalCtrl(currentUser);
+        
+        String endLine = "<html><b>CALORIES REMAINING</b></html>";
+        int calorieLimit = ctrl2.getList().getCalorieLimit().getLimit();
+        int remaining = calorieLimit - calorieCount;
+        
+        String remainingCalories = "";
+        float percentage = (float) remaining / calorieLimit;
+        System.out.println(percentage);
+        
+        if(percentage > 0.5){
+            remainingCalories = "<html><b color='green'>" + remaining + "</b></html>";
+        }
+        else if(percentage < 0.5 && percentage > 0.25){
+            remainingCalories = "<html><b color='orange'>" + remaining + "</b></html>";
+        }
+        else if(percentage < 0.25){
+            remainingCalories = "<html><b color='red'>" + remaining + "</b></html>";
+        }
+        else{
+            remainingCalories = "<html><b>" + remaining + "</b></html>";
+        }
+            
+        Object[] closing = {endLine,remainingCalories};
+        tablemodel.addRow(closing);
         
         table = new JTable(tablemodel);
         jScrollPane1.add(table);
@@ -107,8 +136,8 @@ public class CalorieListView extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 506, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancel)
