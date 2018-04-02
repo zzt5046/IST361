@@ -198,15 +198,28 @@ public class CalorieEntryView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Please fill out all fields.");
                 }
                 
-                MainMenuFrame menu = new MainMenuFrame(currentUser);
-                dispose();
+                try {
+                    MainMenuFrame menu = new MainMenuFrame(currentUser);
+                    dispose();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MainMenuFrame menu = new MainMenuFrame(currentUser);
-                dispose();
+                
+                try {
+                    MainMenuFrame menu = new MainMenuFrame(currentUser);
+                    dispose();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
     }

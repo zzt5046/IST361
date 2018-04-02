@@ -6,6 +6,8 @@
 package ist361;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 
@@ -205,13 +207,25 @@ public class ExerciseEntryView extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "Please fill out all fields.");
                 }
                 
-                MainMenuFrame menu = new MainMenuFrame(currentUser);
+        try {
+            MainMenuFrame menu = new MainMenuFrame(currentUser);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
                 dispose();
     }//GEN-LAST:event_submitActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         
-        MainMenuFrame menu = new MainMenuFrame(currentUser);
+        try {
+            MainMenuFrame menu = new MainMenuFrame(currentUser);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
         dispose();
     }//GEN-LAST:event_cancelActionPerformed
 
