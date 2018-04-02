@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,14 +23,13 @@ public class ExerciseListView extends javax.swing.JFrame {
      * Creates new form ExerciseListView
      */
     User currentUser;
-    JTable table = new JTable();
     
     public ExerciseListView(User currentUser) throws IOException, FileNotFoundException, ClassNotFoundException {
         
         this.currentUser = currentUser;
         initComponents();
         
-        DefaultTableModel tablemodel = (DefaultTableModel) table.getModel();
+        DefaultTableModel tablemodel = new DefaultTableModel();
         tablemodel.addColumn("Title");
         tablemodel.addColumn("Hours");
  
@@ -42,7 +42,9 @@ public class ExerciseListView extends javax.swing.JFrame {
             tablemodel.addRow(data);
         }
         
+        JTable table = new JTable(tablemodel);
         jScrollPane1.add(table);
+        jScrollPane1.setViewportView(table);
         
         setVisible(true);
     }

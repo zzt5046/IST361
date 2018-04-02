@@ -5,6 +5,12 @@
  */
 package ist361;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Zach
@@ -16,10 +22,30 @@ public class CalorieListView extends javax.swing.JFrame {
      */
     User currentUser;
     
-    public CalorieListView(User currentUser) {
+    public CalorieListView(User currentUser) throws IOException, FileNotFoundException, ClassNotFoundException {
+        
         this.currentUser = currentUser;
         initComponents();
+        
+        DefaultTableModel tablemodel = new DefaultTableModel();
+        tablemodel.addColumn("Title");
+        tablemodel.addColumn("Hours");
+ 
+        CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
+        ArrayList<CalorieEntry> entries = ctrl.getList(currentUser).getList();
+        
+        for(int i = 0; i < entries.size(); i++){
+            
+            Object[] data = {entries.get(i).getTitle(), entries.get(i).getCalories()};
+            tablemodel.addRow(data);
+        }
+        
+        JTable table = new JTable(tablemodel);
+        jScrollPane1.add(table);
+        jScrollPane1.setViewportView(table);
+        
         setVisible(true);
+        
     }
 
     /**
@@ -55,22 +81,23 @@ public class CalorieListView extends javax.swing.JFrame {
                 .addContainerGap(47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(155, 155, 155))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(cancel)
                         .addGap(193, 193, 193))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addComponent(jLabel1)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addGap(14, 14, 14)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(cancel)
                 .addGap(5, 5, 5))
