@@ -116,7 +116,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 
-                AccountView accView = new AccountView(currentUser);
+                UserAccountView accView = new UserAccountView(currentUser);
             }
         });
         
