@@ -158,7 +158,13 @@ public class MainMenuFrame extends javax.swing.JFrame {
         calorieEntries.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 
-                CalorieListView listView = new CalorieListView(currentUser);
+                try {
+                    CalorieListView listView = new CalorieListView(currentUser);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
         

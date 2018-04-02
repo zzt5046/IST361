@@ -8,6 +8,8 @@ package ist361;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,6 +25,7 @@ public class ExerciseListView extends javax.swing.JFrame {
      * Creates new form ExerciseListView
      */
     User currentUser;
+    JTable table;
     
     public ExerciseListView(User currentUser) throws IOException, FileNotFoundException, ClassNotFoundException {
         
@@ -42,7 +45,7 @@ public class ExerciseListView extends javax.swing.JFrame {
             tablemodel.addRow(data);
         }
         
-        JTable table = new JTable(tablemodel);
+        table = new JTable(tablemodel);
         jScrollPane1.add(table);
         jScrollPane1.setViewportView(table);
         
@@ -61,6 +64,7 @@ public class ExerciseListView extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         cancel = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -71,6 +75,13 @@ public class ExerciseListView extends javax.swing.JFrame {
         cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("View Details");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -86,10 +97,12 @@ public class ExerciseListView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(142, 142, 142))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(203, 203, 203)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(67, 67, 67)
                 .addComponent(cancel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(125, 125, 125))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -99,7 +112,9 @@ public class ExerciseListView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cancel)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cancel)
+                    .addComponent(jButton1))
                 .addGap(11, 11, 11))
         );
 
@@ -109,9 +124,27 @@ public class ExerciseListView extends javax.swing.JFrame {
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         dispose();
     }//GEN-LAST:event_cancelActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        ExerciseEntryCtrl ctrl = new ExerciseEntryCtrl(currentUser);
+        ArrayList<ExerciseEntry> entries = null;
+        
+        try {
+            entries = ctrl.getList(currentUser).getList();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        
+        ExerciseEntry entry = entries.get(table.getSelectedRow());
+        ExerciseDetailView details = new ExerciseDetailView(entry);
+    }//GEN-LAST:event_jButton1ActionPerformed
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
