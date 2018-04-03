@@ -182,7 +182,7 @@ public class CalorieEntryView extends javax.swing.JFrame {
                     
                     title = titleBox.getText();
                     cals = Integer.parseInt(calorieBox.getText());
-                    date = dayBox.getText() + "-" + yearBox.getText() + "-" + monthBox.getText();
+                    date = dayBox.getText() + "-" + monthBox.getText() + "-" + yearBox.getText();
                     desc = descBox.getText();
                     
                     CalorieEntryBackend backend = new CalorieEntryBackend(currentUser);

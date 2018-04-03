@@ -5,6 +5,7 @@
  */
 package ist361;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,11 +27,15 @@ public class ExerciseListView extends javax.swing.JFrame {
      */
     User currentUser;
     JTable table;
+    double hourCount;
     
     public ExerciseListView(User currentUser) throws IOException, FileNotFoundException, ClassNotFoundException {
         
         this.currentUser = currentUser;
         initComponents();
+        
+        GoalCtrl goalCtrl = new GoalCtrl(currentUser);
+        jLabel2.setText("Current Hour Goal: " + goalCtrl.getList().getExerciseGoal().getGoal());
         
         DefaultTableModel tablemodel = new DefaultTableModel();
         tablemodel.addColumn("Title");
@@ -39,11 +44,43 @@ public class ExerciseListView extends javax.swing.JFrame {
         ExerciseEntryCtrl ctrl = new ExerciseEntryCtrl(currentUser);
         ArrayList<ExerciseEntry> entries = ctrl.getList(currentUser).getList();
         
+        hourCount = 0;
         for(int i = 0; i < entries.size(); i++){
             
             Object[] data = {entries.get(i).getTitle(), entries.get(i).getTime()};
             tablemodel.addRow(data);
+            hourCount = hourCount + entries.get(i).getTime();
         }
+        
+        GoalCtrl ctrl2 = new GoalCtrl(currentUser);
+        
+        String endLine = "<html><b>REMAINING HOURS</b></html>";
+        double exerciseGoal = ctrl2.getList().getExerciseGoal().getGoal();
+        double remaining = exerciseGoal - hourCount;
+        
+        String remainingHours = "";
+        double percentage = (double) remaining / exerciseGoal;
+        System.out.println(percentage);
+        
+        if(percentage > 0.5){
+            remainingHours = "<html><b color='red'>" + remaining + "</b></html>";
+        }
+        else if(percentage < 0.5 && percentage > 0.25){
+            remainingHours = "<html><b color='orange'>" + remaining + "</b></html>";
+        }
+        else if(percentage < 0.25 && percentage > 0){
+            remainingHours = "<html><b color='green'>" + remaining + "</b></html>";
+        }
+        else if(exerciseGoal < hourCount || percentage < 0){
+            remaining = remaining / -1;
+            remainingHours = "<html><b color='green'>Goal met +" + remaining + "</b></html>";
+        }
+        else{
+            remainingHours = "<html><b>" + remaining + "</b></html>";
+        }
+            
+        Object[] closing = {endLine,remainingHours};
+        tablemodel.addRow(closing);
         
         table = new JTable(tablemodel);
         jScrollPane1.add(table);
@@ -65,10 +102,12 @@ public class ExerciseListView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         cancel = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 22)); // NOI18N
         jLabel1.setText("Exercise Entries");
 
         cancel.setText("Cancel");
@@ -85,36 +124,53 @@ public class ExerciseListView extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("jLabel2");
+
+        jButton2.setText("Clear Entries");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 61, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(41, 41, 41)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancel))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(58, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(142, 142, 142))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(67, 67, 67)
-                .addComponent(cancel)
-                .addGap(125, 125, 125))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel2)))
+                .addGap(152, 152, 152))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(11, 11, 11)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 503, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancel)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(11, 11, 11))
         );
 
@@ -141,11 +197,30 @@ public class ExerciseListView extends javax.swing.JFrame {
         ExerciseEntry entry = entries.get(table.getSelectedRow());
         ExerciseDetailView details = new ExerciseDetailView(entry);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        ExerciseEntryCtrl ctrl = new ExerciseEntryCtrl(currentUser);
+        ExerciseEntryList list;
+                
+        try {
+            list = ctrl.getList(currentUser);
+            list.getList().clear();
+            ctrl.saveList(list);
+            dispose();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

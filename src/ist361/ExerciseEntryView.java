@@ -191,7 +191,7 @@ public class ExerciseEntryView extends javax.swing.JFrame {
                     
                     title = titleBox.getText();
                     hours = Double.parseDouble(hourBox.getText());
-                    date = dayBox.getText() + "-" + yearBox.getText() + "-" + monthBox.getText();
+                    date = dayBox.getText() + "-" + monthBox.getText() + "-" + yearBox.getText();
                     desc = descBox.getText();
                     
                     ExerciseEntryBackend backend = new ExerciseEntryBackend(currentUser);
