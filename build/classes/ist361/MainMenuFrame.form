@@ -52,14 +52,15 @@
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                  <Component id="graphExercise" max="32767" attributes="0"/>
-                                  <Component id="graphCalories" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="graphData" min="-2" pref="148" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -71,23 +72,29 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="53" max="32767" attributes="0"/>
+              <EmptySpace pref="59" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="exerciseEntries" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
-                  <Component id="addExerciseEntry" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
-                  <Component id="graphExercise" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="addCalorieEntry" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
-                  <Component id="calorieEntries" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
-                  <Component id="graphCalories" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="exerciseEntries" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                          <Component id="addExerciseEntry" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="addCalorieEntry" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                          <Component id="calorieEntries" alignment="3" min="-2" pref="58" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <Component id="graphData" min="-2" pref="58" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -138,15 +145,13 @@
         <Property name="text" type="java.lang.String" value="New Exercise Entry"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="graphCalories">
+    <Component class="javax.swing.JButton" name="graphData">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Graph Calorie Data"/>
+        <Property name="text" type="java.lang.String" value="Graph Data"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="graphExercise">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Graph Exercise Data"/>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="graphDataActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
