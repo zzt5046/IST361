@@ -16,6 +16,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.data.xy.XYDataset;
 
@@ -26,6 +28,7 @@ import org.jfree.data.xy.XYDataset;
 public class CalorieGraphView {
     
     User currentUser;
+    JFreeChart chart;
     
     public CalorieGraphView(User currentUser, int type){
         
@@ -33,35 +36,49 @@ public class CalorieGraphView {
         SwingUtilities.invokeLater(new Runnable() {
             
             public void run() {
-                JFrame frame = new JFrame("Charts");
+                JFrame frame = new JFrame("Your Generated Chart");            
+                frame.setSize(800, 600);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                
-                frame.setSize(600, 400);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setVisible(true);
 
-                XYDataset ds = null;
-                try {
-                    ds = createDataset();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
-                }
+                if(type == 0){
                 
-                JFreeChart chart = ChartFactory.createXYLineChart("Calories Over Time",
-                        "Per Entry", "Calories", ds, PlotOrientation.VERTICAL, true, true,
-                        false);
+                    XYDataset ds = null;
+                    try {
+                        ds = createDatasetLine();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                               
+                    chart = ChartFactory.createXYLineChart("Calories Over Time",
+                            "Per Entry", "Calories", ds, PlotOrientation.VERTICAL, true, true, false);
+                }
+                else if (type == 1){
+                    
+                    CategoryDataset ds = null;
+                    try {
+                        ds = createDatasetBar();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    } catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                    
+                    chart = ChartFactory.createBarChart("Calories Over Time", 
+                            "Date", "Calories", ds, PlotOrientation.VERTICAL, true, true, false);
+                    
+                }
 
                 ChartPanel cp = new ChartPanel(chart);
-
                 frame.getContentPane().add(cp);
             }
         });
 
     }
 
-    XYDataset createDataset() throws IOException, FileNotFoundException, ClassNotFoundException {
+    XYDataset createDatasetLine() throws IOException, FileNotFoundException, ClassNotFoundException {
 
         DefaultXYDataset ds = new DefaultXYDataset();
         CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
@@ -90,12 +107,12 @@ public class CalorieGraphView {
         
         double[][] data = {countArray, calArray};
         ds.addSeries("Main", data);
-        ds.addSeries("Top represents Calorie Limit", setLimit());
+        ds.addSeries("Top represents Calorie Limit", setCalorieLimit());
 
         return ds;
     }
     
-    double[][] setLimit() throws IOException, FileNotFoundException, ClassNotFoundException{
+    double[][] setCalorieLimit() throws IOException, FileNotFoundException, ClassNotFoundException{
         
         CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
         GoalCtrl goalCtrl = new GoalCtrl(currentUser);
@@ -123,5 +140,18 @@ public class CalorieGraphView {
 
         return data;
         
+    }
+    
+    CategoryDataset createDatasetBar() throws IOException, FileNotFoundException, ClassNotFoundException{
+        
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+        CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
+        ArrayList<CalorieEntry> entries = ctrl.getList(currentUser).getList();
+        
+        for(int i = 0; i < entries.size(); i++){
+            dataset.addValue(entries.get(i).getCalories(), entries.get(i).getTitle(), entries.get(i).getDate());
+        }
+        
+        return dataset;
     }
 }
