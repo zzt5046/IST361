@@ -37,7 +37,7 @@ public class CalorieListView extends javax.swing.JFrame {
         
         DefaultTableModel tablemodel = new DefaultTableModel();
         tablemodel.addColumn("Title");
-        tablemodel.addColumn("Hours");
+        tablemodel.addColumn("Calories");
  
         CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
         ArrayList<CalorieEntry> entries = ctrl.getList(currentUser).getList();

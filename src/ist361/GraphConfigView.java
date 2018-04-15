@@ -123,6 +123,8 @@ public class GraphConfigView extends javax.swing.JFrame {
         else{
             ExerciseGraphView graph = new ExerciseGraphView(currentUser, jComboBox2.getSelectedIndex());
         }
+        
+        dispose();
     }//GEN-LAST:event_generateActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed

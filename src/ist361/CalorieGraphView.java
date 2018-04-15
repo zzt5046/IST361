@@ -8,8 +8,8 @@ package ist361;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Arrays;
+import java.util.stream.Stream;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
@@ -27,7 +27,7 @@ public class CalorieGraphView {
     
     User currentUser;
     
-    public CalorieGraphView(User user, int type){
+    public CalorieGraphView(User currentUser, int type){
         
         this.currentUser = currentUser;
         SwingUtilities.invokeLater(new Runnable() {
@@ -50,7 +50,7 @@ public class CalorieGraphView {
                 }
                 
                 JFreeChart chart = ChartFactory.createXYLineChart("Calories Over Time",
-                        "x", "y", ds, PlotOrientation.VERTICAL, true, true,
+                        "Per Entry", "Calories", ds, PlotOrientation.VERTICAL, true, true,
                         false);
 
                 ChartPanel cp = new ChartPanel(chart);
@@ -61,23 +61,67 @@ public class CalorieGraphView {
 
     }
 
-    private XYDataset createDataset() throws IOException, FileNotFoundException, ClassNotFoundException {
+    XYDataset createDataset() throws IOException, FileNotFoundException, ClassNotFoundException {
 
         DefaultXYDataset ds = new DefaultXYDataset();
         CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
         ArrayList<CalorieEntry> entries = ctrl.getList(currentUser).getList();
         
-        double[] calData = null;
-        double[] counters = null;
+        ArrayList<Double> calData = new ArrayList<>();
+        ArrayList<Double> counters = new ArrayList<>();
         
         for(int i = 0; i < entries.size(); i++){
-            calData[i] = (double) entries.get(i).getCalories();
-            counters[i] = (double) i;
+            calData.add((double) entries.get(i).getCalories());
+            counters.add((double) i);
         }
         
-        double[][] data = {counters, calData};
+        double[] calArray = new double[calData.size()];
+        for(int i = 0; i < calArray.length; i++){
+            calArray[i] = calData.get(i);
+        }
+        Arrays.sort(calArray);
+        
+        double[] countArray = new double[counters.size()];
+        for(int i = 0; i < countArray.length; i++){
+            countArray[i] = counters.get(i);
+        }
+        Arrays.sort(countArray);
+
+        
+        double[][] data = {countArray, calArray};
         ds.addSeries("Main", data);
+        ds.addSeries("Top represents Calorie Limit", setLimit());
 
         return ds;
+    }
+    
+    double[][] setLimit() throws IOException, FileNotFoundException, ClassNotFoundException{
+        
+        CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
+        GoalCtrl goalCtrl = new GoalCtrl(currentUser);
+        ArrayList<CalorieEntry> entries = ctrl.getList(currentUser).getList();
+        
+        ArrayList<Double> limits = new ArrayList<>();
+        ArrayList<Double> zeros = new ArrayList<>();
+        
+        for(int i = 0; i < entries.size(); i++){
+            limits.add((double) goalCtrl.getList().getCalorieLimit().getLimit());
+            zeros.add((double) 0);
+        }
+        
+        double[] limArray = new double[limits.size()];
+        for(int i = 0; i < limArray.length; i++){
+            limArray[i] = limits.get(i);
+        }
+        
+        double[] zeroArray = new double[zeros.size()];
+        for(int i = 0; i < zeroArray.length; i++){
+            zeroArray[i] = zeros.get(i);
+        }
+        
+        double[][] data = {zeroArray, limArray};
+
+        return data;
+        
     }
 }

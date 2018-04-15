@@ -57,7 +57,6 @@ public class CalorieEntryCtrl {
     CalorieEntryList getList(User user) throws FileNotFoundException, IOException, ClassNotFoundException{
         
         File folder = new File("data/");
-        System.out.print(user.getUsername());
         String targetFile = user.getUsername() + "CalorieList.ser";
         CalorieEntryList entryList = null;
         
