@@ -67,10 +67,12 @@ public class CalorieListView extends javax.swing.JFrame {
             remainingCalories = "<html><b color='orange'>" + remaining + "</b></html>";
         }
         else if(percentage < 0.25){
-            remaining = remaining / -1;
-            remainingCalories = "<html><b color='red'>Over limit +" + remaining + "</b></html>";
+            remainingCalories = "<html><b color='red'>" + remaining + "</b></html>";
         }
         else{
+            if(remaining < 0){
+                remaining = remaining/-1;
+            }
             remainingCalories = "<html><b>" + remaining + "</b></html>";
         }
             
