@@ -65,7 +65,7 @@ public class ExerciseGraphView {
                         ex.printStackTrace();
                     }
                     
-                    chart = ChartFactory.createBarChart("Hours Over Time", 
+                    chart = ChartFactory.createBarChart3D("Hours Over Time", 
                             "Date", "Hours", ds, PlotOrientation.VERTICAL, true, true, false);
                     
                 }

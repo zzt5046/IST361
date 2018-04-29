@@ -5,12 +5,10 @@
         <group>
             <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/CalorieGraphView.java</file>
             <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/CalorieListView.java</file>
-            <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/GoalCtrl.java</file>
-            <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/WeightCtrl.java</file>
+            <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/ExerciseGraphView.java</file>
             <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/MainMenuFrame.java</file>
-            <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/UserAccountView.java</file>
-            <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/WeightEntry.java</file>
-            <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/UserCtrl.java</file>
+            <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/RunApp.java</file>
+            <file>file:/C:/Users/Zach/Documents/GitHub/IST361/src/ist361/GraphConfigView.java</file>
         </group>
     </open-files>
 </project-private>

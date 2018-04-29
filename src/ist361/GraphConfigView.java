@@ -42,7 +42,12 @@ public class GraphConfigView extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Calories", "Exercise" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Calories", "Exercise", "Combined" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Category");
 
@@ -117,19 +122,33 @@ public class GraphConfigView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateActionPerformed
+            
         if(jComboBox1.getSelectedIndex() == 0){
             CalorieGraphView graph = new CalorieGraphView(currentUser, jComboBox2.getSelectedIndex());
+            dispose();
         }
-        else{
+        else if(jComboBox1.getSelectedIndex() == 1){
             ExerciseGraphView graph = new ExerciseGraphView(currentUser, jComboBox2.getSelectedIndex());
+            dispose();
         }
-        
-        dispose();
+        else if(jComboBox1.getSelectedIndex() == 2){
+            CombinedGraphView graph = new CombinedGraphView(currentUser, jComboBox2.getSelectedIndex());
+            dispose();
+        }
     }//GEN-LAST:event_generateActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         dispose();
     }//GEN-LAST:event_cancelActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        if(jComboBox1.getSelectedIndex() == 2){
+            jComboBox2.setEnabled(false);
+        }
+        else{
+            jComboBox2.setEnabled(true);
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
