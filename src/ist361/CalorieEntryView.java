@@ -193,18 +193,19 @@ public class CalorieEntryView extends javax.swing.JFrame {
                     } catch (ClassNotFoundException ex) {
                         ex.printStackTrace();
                     }
+                    
+                    try {
+                    MainMenuFrame menu = new MainMenuFrame(currentUser);
+                    dispose();
+                    } catch (IOException ex) {
+                    ex.printStackTrace();
+                    } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                    }
+                    
                 }
                 else{
                     JOptionPane.showMessageDialog(null, "Please fill out all fields.");
-                }
-                
-                try {
-                    MainMenuFrame menu = new MainMenuFrame(currentUser);
-                    dispose();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
                 }
             }
         });
@@ -223,6 +224,7 @@ public class CalorieEntryView extends javax.swing.JFrame {
             }
         });
     }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField calorieBox;
     private javax.swing.JButton cancelButton;

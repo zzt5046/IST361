@@ -8,18 +8,14 @@ package ist361;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DatasetUtilities;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.ui.RefineryUtilities;
-import org.jfree.util.TableOrder;
 
 /**
  *
@@ -37,45 +33,79 @@ public class CombinedGraphView {
         SwingUtilities.invokeLater(new Runnable() {
             
             public void run() {
-                JFrame frame = new JFrame("Combined Graph");
+            
+                //create chart 1 ------------------------------------------------------------------
+                JFrame frame = new JFrame("Exercise Graph");
                 frame.setSize(800, 600);
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-                CategoryDataset ds = null;  
+                DefaultPieDataset ds = null;  
                 try {
-                    ds = getDataset();
+                    ds = getExerciseDataset();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 } catch (ClassNotFoundException ex) {
                     ex.printStackTrace();
                 }
-                chart = ChartFactory.createMultiplePieChart("All Data", ds, TableOrder.BY_COLUMN, true, true, false);
+                chart = ChartFactory.createPieChart("Hours", ds, true, true, false);
 
                 ChartPanel cp = new ChartPanel(chart);
                 frame.getContentPane().add(cp);
+                PiePlot plot = (PiePlot) chart.getPlot();
+                plot.setNoDataMessage("No data available");
                 frame.setVisible(true);
+            
+            //create chart 2----------------------------------------------------------------------
+            JFrame frame2 = new JFrame("Calorie Data");
+                frame2.setSize(800, 600);
+                frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+                DefaultPieDataset ds2 = null;  
+                try {
+                    ds2 = getCalorieDataset();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                chart2 = ChartFactory.createPieChart("Calories", ds2, true, true, false);
+
+                ChartPanel cp2 = new ChartPanel(chart2);
+                frame2.getContentPane().add(cp2);
+                PiePlot plot2 = (PiePlot) chart2.getPlot();
+                plot2.setNoDataMessage("No data available");
+                RefineryUtilities.centerFrameOnScreen(frame2);
+                frame2.setVisible(true);
+            
             }
         });
 
     }
     
-    CategoryDataset getDataset() throws IOException, FileNotFoundException, ClassNotFoundException{
+    //get datasets
+    public DefaultPieDataset getExerciseDataset() throws IOException, FileNotFoundException, ClassNotFoundException{
+        
+        DefaultPieDataset dataset = new DefaultPieDataset();
         
         ExerciseEntryCtrl ctrl = new ExerciseEntryCtrl(currentUser);
         ArrayList<ExerciseEntry> entries = ctrl.getList(currentUser).getList();
-        
-        CalorieEntryCtrl ctrl2 = new CalorieEntryCtrl(currentUser);
-        ArrayList<CalorieEntry> entries2 = ctrl2.getList(currentUser).getList();
-        
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        
-        for(int i = 0; i > entries.size(); i++){
-            System.out.println(entries.get(i).getTime());
-            dataset.addValue(entries.get(i).getTime(), entries.get(i).getTitle(), "Exercise");
+
+        for(int i = 0; i < entries.size(); i++){
+            dataset.setValue(entries.get(i).getTitle(), new Double(entries.get(i).getTime()));
         }
         
-        for(int i = 0; i > entries2.size(); i++){
-            dataset.addValue(entries2.get(i).getCalories(), entries2.get(i).getTitle(), "Calories");
+        return dataset;
+    }
+    
+    DefaultPieDataset getCalorieDataset() throws IOException, FileNotFoundException, ClassNotFoundException{
+        
+        DefaultPieDataset dataset = new DefaultPieDataset();
+        
+        CalorieEntryCtrl ctrl = new CalorieEntryCtrl(currentUser);
+        ArrayList<CalorieEntry> entries = ctrl.getList(currentUser).getList();
+
+        for(int i = 0; i < entries.size(); i++){
+            dataset.setValue(entries.get(i).getTitle(), new Double (entries.get(i).getCalories()));
         }
         
         return dataset;
